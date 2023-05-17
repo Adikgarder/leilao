@@ -1,0 +1,107 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'auctions/w3.css' %}">
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<body>
+    <div class="w3-bar w3-blue w3-wide w3-padding w3-car">
+        <a href="{% url 'index' %}" class="w3-bar-item w3-button"><b>LJ</b> Leilão Judicial</a>
+    </div>
+
+    <div class="w3-container w3-display-container city">
+        <h1>Dashboard</h1>
+
+        <div class="w3-row-padding w3-grayscale">
+            <div class="w3-col l3 m6 w3-margin-bottom w3-card w3-yellow">
+                <h3> Total Vendas</h3>
+                <p> 1000 </p>
+            </div>
+            <div class="w3-col l3 m6 w3-margin-bottom w3-card w3-yellow">
+                <h3> Total Vendas</h3>
+                <p> 1000 </p>
+            </div>
+            <div class="w3-col l3 m6 w3-margin-bottom w3-card w3-yellow">
+                <h3> Total Vendas</h3>
+                <p> 1000 </p>
+            </div>
+            <div class="w3-col l3 m6 w3-margin-bottom w3-card w3-yellow">
+                <h3> Total Vendas</h3>
+                <p> 1000 </p>
+            </div>
+         
+        </div>
+
+
+
+        <div class="w3-container">
+            <h2>Lista de Vencedores: </h2>
+            <table class="w3-table w3-table-all w3-card-4 w3-table-all w3-hoverable">
+                <tr class="w3-blue">
+                    <th>Produto</th>
+                    <th>Vencedores</th>
+                    <th>Accao</th>
+                </tr>
+                {% for winner in winnners %}
+                <tr>
+                    <td>{{ winner.user}}</td>
+                    <td>{{ winner.bid_win_list.title}}</td>
+                    <td>
+                        <button class="w3-btn w3-white w3-border w3-border-red w3-round"
+                            onclick="openModal('{{ winner.user }}', '{{ winner.bid_win_list.title }}')">Notificar</button>
+
+                    </td>
+                </tr>
+                {% endfor %}
+
+                <div id="id01" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <form action="{% url 'send_email' %}" method="post">
+                            {% csrf_token %}
+                            <span onclick="document.getElementById('id01').style.display='none'"
+                                class="w3-button w3-display-topright">&times;</span>
+                            <div class="w3-container">
+                                <h2>Message to Winner.</h2>
+                                <input class="w3-input w3-section w3-border" type="text" placeholder="Email" required
+                                    name="Email" value="">
+                                <input class="w3-input w3-section w3-border" type="text" placeholder="Subject" required
+                                    name="Subject">
+                                <input class="w3-input w3-section w3-border" type="text" placeholder="Comment" required
+                                    name="Comment">
+
+                                <button class="w3-button w3-black w3-section" type="submit">
+                                    <i class="fa fa-paper-plane"></i> Enviar </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function openModal(email, subject) {
+            // Get the modal and form elements
+            var modal = document.getElementById('id01');
+            var form = modal.getElementsByTagName('form')[0];
+
+            // Fill in the email and subject fields
+            form.elements['Email'].value = "ikbalamad57@gmail.com";
+            form.elements['Subject'].value = subject;
+            form.elements['Comment'].value = "Caro , \n  temos o prazer de o informar que ganhou a licitação para  em LJ Leilão Judicial. Parabéns!\n\nPara completar a compra, por favor siga as instruções abaixo:\n\n1. Transfere o montante total para a seguinte conta bancária:\nNome do Banco: XYZ\n Número da conta: 1234567890\n Titular da conta: LJ Leilão Judicial\n Montante: 100x \n\n2. Envie-nos um email de confirmação para confirmar o seu pagamento.\n\n3. Iremos então tratar da entrega do seu artigo.\n\nObrigado por participar no nosso leilão. Esperamos poder voltar a fazer negócio consigo em breve.\n\nCumprimentos,\nEquipa Judicial de Leilão";
+            modal.style.display = 'block';
+        }
+
+
+    </script>
+
+</body>
+
+</html>

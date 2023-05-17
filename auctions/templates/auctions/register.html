@@ -1,0 +1,121 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body mt-4">
+                    <h2 class="card-title text-center mb-4" style="font-size: 20px;">Bem-vindo! Registre-se</h2>
+
+                    {% if message %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                    {% endif %}
+
+                    <form action="{% url 'register' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input autofocus class="form-control" type="text" name="username" id="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input class="form-control" type="email" name="email" id="email">
+                        </div>
+                        <div class="form-group password-inputs">
+                            <div class="password-input">
+                              <label for="password">Password:</label>
+                              <input class="form-control" type="password" name="password" id="password">
+                            </div>
+                            <div class="password-input">
+                              <label for="confirmation">Confirma o Password:</label>
+                              <input class="form-control" type="password" name="confirmation" id="confirmation">
+                            </div>
+                          </div>
+                          
+                        <div class="form-group phone-inputs">
+                            <div class="phone-input">
+                              <label for="telefone">Telefone:</label>
+                              <input class="form-control" type="text" name="telefone" id="telefone">
+                            </div>
+                            <div class="phone-input">
+                              <label for="codigo_postal">Código Postal:</label>
+                              <input class="form-control" type="text" name="codigo_postal" id="codigo_postal">
+                            </div>
+                          </div>                          
+                          <div class="form-group address-inputs">
+                            <div class="form-group address-input">
+                                <label for="endereco">Endereço:</label>
+                                <input class="form-control" type="text" name="endereco" id="endereco">
+                            </div>
+                            <div class="form-group address-input">
+                                <label for="cidade">Cidade:</label>
+                                <input class="form-control" type="text" name="cidade" id="cidade">
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block">Registre-ser</button>
+                        </div>
+
+                    </form>
+
+                    <p class="text-center">Já tem uma conta? <a href="{% url 'login' %}">Log In here.</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+    </div>
+</footer>
+<style>
+.form-group.address-inputs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .form-group.address-input {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .form-group.address-inputs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .form-group.address-input {
+    flex: 1;
+    margin-right: 10px;
+  }
+  .phone-inputs, .address-inputs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.phone-input, .address-input {
+    flex: 1;
+    margin-right: 10px;
+}
+.password-inputs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .password-input {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+</style>
+{% endblock %}

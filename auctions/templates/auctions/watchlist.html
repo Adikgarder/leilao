@@ -1,0 +1,121 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div style="text-align: center;">
+    <h2>Lista de Observação</h2>
+</div>
+<div id="activelist">
+    {% for list in user_watchlist %}
+    {% if list.watch_list.active_bool == True %}
+    <div class="card">
+        <a class="title">{{list.watch_list.title}}</a>
+        <a class="cat">{{list.watch_list.category}}</a>
+        {% if list.watch_list.image_url %}
+        <img src="{{ list.watch_list.image_url }}" class="list_img">
+        {% else %}
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png"
+            alt="Imagem não fornecida" class="list_img">
+        {% endif %}
+        <a class="c_price">Preço atual: {{ list.watch_list.starting_bid }} MT</a>
+        <a href="{% url 'listingpage' list.watch_list.id %}" class="btn">Ver oferta</a>
+        <form action="{% url 'deletewatchlist' %}">
+            <button type="submit" value="{{ list.id }}" name="listid" class="delete-btn">Excluir</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    #activelist {
+        margin-top: 4vw;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-gap: 1.5rem;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    .card {
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+        height: 400px;
+        padding: 1.5rem;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+    }
+
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+    }
+
+    .card .title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 0.5rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .card .cat {
+        font-size: 0.875rem;
+        color: #777;
+        margin-bottom: 1rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .card .c_price {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .card .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 4px;
+        text-decoration: none;
+        margin-right: 0.5rem;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .card .btn:hover {
+        background-color: #0069d9;
+    }
+
+    .card .delete-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .card .delete-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

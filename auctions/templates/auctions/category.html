@@ -1,0 +1,63 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <h2 class="page-title">Categorias</h2>
+  <div class="categories-list">
+    {% for category in cat_list %}
+      <a href="{% url 'cat' category.category %}" class="category-card btn">
+        {{ category.category }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <style>
+    /* Font */
+    body {
+      font-family: "Lato", sans-serif;
+    }
+
+    /* Page Title */
+    .page-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #293241;
+      text-align: center;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Category List */
+    .categories-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+      background-color: #f7fff7;
+    }
+
+    /* Category Card */
+    .category-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+      color: #293241;
+      font-size: 2rem;
+      font-weight: bold;
+      height: 15rem;
+      width: 12rem;
+      background-color: #f0f5f9;
+      border-radius: 1rem;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* Category Card Hover */
+    .category-card:hover {
+      transform: translateY(-0.5rem);
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2 style="font-weight: bold;text-align: center; font-family: Nunito;">Criar Anúncio</h2>
+<div id="activelist">
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="form-group">
+<label for="title" style="font-family: 'Nunito', sans-serif;">Título:</label>
+<input required autofocus type="text" class="form-control" id="title" name="create_title" placeholder="Título">
+</div>
+<div class="form-group">
+<label for="description" style="font-family: 'Nunito', sans-serif;">Descrição:</label>
+<textarea class="form-control" id="description" name="create_desc" placeholder="Adicione a descrição" required></textarea>
+</div>
+<div class="form-group">
+<label for="initial_bid" style="font-family: 'Nunito', sans-serif;">Lance inicial:</label>
+<input required type="number" class="form-control" id="initial_bid" name="create_initial_bid" placeholder="Lance inicial">
+</div>
+<div class="form-group">
+<label for="img" style="font-family: 'Nunito', sans-serif;">Imagem:</label>
+<input placeholder="URL da imagem (opcional)" type="text" name="img_url"/>
+</div>
+<div class="form-group">
+<label for="category" style="font-family: 'Nunito', sans-serif;">Categoria:</label>
+<input required type="text" class="form-control" id="category" name="category" placeholder="Categoria">
+</div>
+<button class="btn btn-primary btn-lg btn-block" type="submit">Enviar</button>
+</form>
+</div>
+
+<style>
+#activelist {
+    width: 60%;
+    margin-left: 20%;
+}
+
+textarea {
+    height: 10vw;
+}
+
+form {
+    padding-top: 2vw;
+    font-family: 'Nunito', sans-serif;
+}
+
+.btn {
+    font-family: Nunito;
+    margin-top: 2vw;
+}
+
+</style>
+{% endblock %}
+
+

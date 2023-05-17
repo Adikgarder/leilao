@@ -1,0 +1,163 @@
+{% extends "auctions/layout.html" %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+
+
+{% block body %}
+<div class="page-header">
+  <h1 class="page-title">Leilões Ativos</h1>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+
+<div class="message">{{ message }}</div>
+{% endfor %}
+{% endif %}
+<div id="activelist">
+{% for list in a1 %}
+<div class="card">
+{% if list.image_url %}
+<img src="{{ list.image_url }}" class="list_img">
+{% else %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="Imagem não fornecida" class="list_img">
+{% endif %}
+<div class="details">
+  <a class="title">{{ list.title }}</a>
+  <div class="price">
+    <a class="label">Lance Inicial:</a>
+    <a class="value">{{ list.starting_bid }} MT</a>
+  </div>
+  {% load tz %}
+
+  <div class="time-left">
+    {% timezone "Africa/Maputo" %}
+      {% if list.end_date|date:'U' < timezone.now|date:'U' %}
+        <p class="text-danger">Leilão encerrado</p>
+      {% else %}
+        <p>Tempo restante: {{ list.end_date|timeuntil }}</p>
+      {% endif %}
+    {% endtimezone %}
+  </div>
+  
+
+  <a href="{% url 'listingpage' list.id %}" class="btn btn-primary btn-sm">Dar Lance</a>
+</div>
+</div>
+
+{% endfor %}
+
+</div>
+<style>
+
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .page-title {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(0,140,255);
+    
+    color: #fff;
+    font-size: 19px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+  
+  .page-title:hover {
+    background-color: #2B3044;
+  }
+  
+  .title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2vw;
+    font-weight: 500;
+    margin-bottom: 0.5vw;
+  }
+    p {
+        margin: 0.3vw;
+        font-size: 0.7vw;
+        font-family: 'Nunito', sans-serif;
+      }
+
+      #activelist {
+        margin-top: 2vw;
+        display: grid;
+        grid-gap: 2vw;
+        grid-template-columns: repeat(4, 1fr); /* Change this line */
+      }
+
+      .card {
+        background: linear-gradient(to bottom right, #D3D3D3 ,);
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+        max-width: 250px; /* Add this line to limit the width of the card */
+        margin: auto; /* Add this line to center the card */
+      }
+
+.card:hover {
+  transform: translate(0, -5px) rotateX(10deg);
+}
+
+.list_img {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.details {
+  padding: 1vw;
+  text-align: center;
+}
+
+.title {
+    display: block;
+    font-size: 1.2vw;
+    font-weight: bold;
+    margin-bottom: 0.5vw;
+  }
+
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.8vw;
+}
+
+.label {
+    font-size: 1vw;
+    font-weight: bold;
+    margin-right: 0.5vw;
+  }
+
+.value {
+  font-size: 1.2vw;
+  font-weight: bold;
+}
+
+.btn {
+  margin-top: 0.9vw;
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 8px;
+  font-size: 0.8vw;
+  padding: 0.3vw 1.2vw;
+}
+
+.btn:hover {
+  background-color: #0062cc;
+  border-color: #005cbf;
+}
+</style>
+{% endblock %}

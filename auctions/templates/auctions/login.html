@@ -1,0 +1,61 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card mx-3">
+
+                <div class="form-box">
+                    <h2 class="card-title text-center mb-4">Login</h2>
+
+                    {% if message %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                    {% endif %}
+
+                    <form action="{% url 'login' %}" method="post" class="col-12">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input autofocus class="form-control rounded-pill" type="text" name="username"
+                                id="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input class="form-control rounded-pill" type="password" name="password" id="password">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary rounded-pill btn-block">Login</button>
+                        </div>
+                        <p class="text-center">Não tem uma conta? <a href="{% url 'register' %}">Registre-se aqui</a>
+                        <p class="text-center">Esqueceu senha<a href="{% url 'password_reset' %}"> clique aqui</a>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+<p>
+<p>
+<footer class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+    </div>
+</footer>
+</p>
+</p>
+</p>
+
+<style>
+
+
+</style>
+{% endblock %}

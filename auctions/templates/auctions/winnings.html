@@ -1,0 +1,88 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div style="text-align: center;">
+    <h2>seus ganhos</h2>
+  </div>
+    
+    <div id="activelist">
+    {% for list in user_winlist %}
+    <div class = "card">
+        <a class="title">{{list.bid_win_list.title}}</a>
+        <a class= "cat">{{list.bid_win_list.category}}</a>
+        {% if list.bid_win_list.image_url %}
+            <img src="{{ list.bid_win_list.image_url }}" class="list_img">
+        {% else %}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="No image Provided" class="list_img">
+        {% endif %}
+        <p class="desc">{{ list.bid_win_list.desc }}</p>
+        <div>Listado por: <a class = "listuser">{{ list.bid_win_list.user }}</a>.</div>
+    </div>  
+    {% endfor %}
+    </div>
+      
+<style>
+        
+#activelist{
+    margin-top: 4vw;
+    grid-gap: 2vw;
+    display:grid;
+    width: 90%;
+    margin-left: 5%;
+    grid-template-rows: repeat(auto,1fr);
+    grid-template-columns: 1fr 1fr;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+}
+.card {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: 'Nunito', sans-serif;
+    margin: 20px;
+    padding: 20px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: rotate(5deg);
+  }
+  
+  .card:active {
+    background-color: #f2f2f2;
+  }
+  
+img{
+        width: 100%;
+    }
+
+.title{
+
+    font-size: 2vw;
+    font-weight: bold;
+}
+.listuser{
+    font-weight: bold;
+}
+button{
+    width: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#activelist {
+  flex-grow: 1;
+}
+
+</style>
+{% endblock %}
+
+

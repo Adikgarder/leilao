@@ -1,0 +1,161 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="card">
+  <div class="card-body d-flex">
+    <img src="{{ list.image_url }}" class="list_img mr-3" alt="Imagem do produto">
+    <div>
+      <h5 class="card-title">{{list.title}}</h5>
+      <p class="card-text" style="font-size: smaller">{{ list.desc }}</p>
+      <p class="card-text"><small class="text-muted">{{ list.category }}</small></p>
+      <div class="bid-form">
+        <p class="card-text"><a class="c_price">Lance atual:</a> {{ present_bid }} MT</p>
+        <p class="card-text"><a class="c_price">Listado por:</a> {{ list.user }}</p>
+        <form method="get" action="{% url 'bid' %}">
+          <div class="input-group">
+            <input name="bid_amnt" placeholder="Digite seu lance aqui" type="number" class="form-control">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit" name="list_d" value={{ list.id }}>Dar Lance</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="watchlist-form">
+        <form method="get" action="{% url 'addwatchlist' %}">
+          <button class="btn btn-outline-primary" type="submit" value={{ list.id }} name="listid">
+            <i class="far fa-star"></i> Adicionar à lista de observação
+          </button>
+        </form>
+      </div>
+
+       <!-- Tabela com nomes e lances dos usuários -->
+      <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Usuário</th>
+                <th scope="col">Lance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bid in user_bids %}
+            <tr>
+                <td>{{ bid.user }}</td>
+                <td>{{ bid.bid_amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="max-height: 400px; overflow: auto;">
+  <div class="card-body">
+    <h5 class="card-title">Comentários</h5>
+    <ul class="list-group list-group-flush">
+      {% for comment in comments %}
+      <li class="list-group-item">{{ comment.user }} : {{comment.comment}}</li>
+      {% endfor %}
+    </ul>
+    <form method="get" action="{% url 'allcomments' %}">
+      <div class="form-group">
+        <label for="comment">Adicione seu comentário:</label>
+        <input required type="text" class="form-control" id="comment" name="comment">
+        <input type="hidden" value={{ list.id }} name="listid">
+      </div>
+      <button type="submit" class="btn btn-primary">Comentar</button>
+    </form>
+    {% if list.user == user.username %}
+    <form method="get" action="{% url 'win_ner' %}">
+      <input type="hidden" value={{ list.id }} name="listid">
+      <button type="submit" class="btn btn-primary">Fechar leilão</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+
+
+<style>
+  .form-control {
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    padding: 4px 12px;
+    font-size: 14px;
+  }
+
+  #activelist {
+    margin-top: 2vw;
+    grid-gap: 2vw;
+    display: grid;
+    width: 40%;
+    /* aumentado o valor para 90% */
+    margin-left: 2%;
+    /* ajustando o valor para centralizar o elemento */
+    grid-template-rows: repeat(auto, 1fr);
+    grid-template-columns: 1fr 0.5fr;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .card {
+    width: 1000px;
+    height: 400px;
+    margin: 0 auto;
+    /* Adiciona margem automática para centralizar horizontalmente */
+  }
+
+  #commentbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1vw;
+    padding: 1vw;
+    background-color: white;
+    min-height: 300px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+
+
+  img {
+    width: 50%;
+    image-rendering: optimizeQuality;
+  }
+
+  .title {
+    font-size: 2vw;
+    font-weight: bold;
+    color: #FF0000;
+  }
+
+  .c_price {
+
+    font-weight: bold;
+
+  }
+
+  .comment {
+    align-items: left;
+  }
+
+  .start_bid {
+
+    padding-bottom: 1vw;
+
+  }
+
+  footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 0rem;
+
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+</style>
+{% endblock %}
