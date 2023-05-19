@@ -12,8 +12,17 @@ from django.http import HttpResponseBadRequest
 from .forms import EmailForm
 from django.shortcuts import render
 from .models import auctionlist
+from .models import bids
 
 
+
+
+def listingpage(request):
+    allbids = bids.objects.all()
+
+    return render(request, "auctions/listingpage.html", {
+        "allbids": allbids,
+    })
 
 def index(request):    
     return render(request, "auctions/index.html",{
@@ -132,6 +141,7 @@ def listingpage(request, bidid):
         "list": biddesc,
         "comments" : comments.objects.filter(listingid = bidid),
         "present_bid": minbid(biddesc.starting_bid, bids_present),
+        "allbids":bids.objects.filter(listingid = bidid),
     })
 
 
@@ -282,21 +292,6 @@ def cat_list(request):
     
 def terms_and_conditions(request):
     return render(request, 'terms_and_conditions.html')
-
-
-def your_view(request):
-    user_bids = [
-        {'user': 'Usuário 1', 'bid_amount': 100},
-        {'user': 'Usuário 2', 'bid_amount': 150},
-        {'user': 'Usuário 3', 'bid_amount': 200},
-    ]
-
-    context = {
-        'user_bids': user_bids,
-    }
-
-    return render(request, 'listingpage.html', context) 
-
 
 
 

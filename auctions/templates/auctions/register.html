@@ -16,7 +16,7 @@
                     <form action="{% url 'register' %}" method="post">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="username">Username:</label>
+                            <label for="username">Nome completo:</label>
                             <input autofocus class="form-control" type="text" name="username" id="username">
                         </div>
                         <div class="form-group">
@@ -57,7 +57,7 @@
                         
                         
                         <div class="form-group">
-                            <button class="btn btn-primary btn-block">Registre-ser</button>
+                            <button class="btn btn-primary btn-block">Registra-se</button>
                         </div>
 
                     </form>

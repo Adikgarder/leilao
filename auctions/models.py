@@ -36,15 +36,15 @@ class auctionlist(models.Model):
     end_date = models.DateTimeField()
 
 
-def time_left(self):
-    time_left = self.end_date - timezone.now()
-    if time_left.total_seconds() <= 0:
-        return "Leilão encerrado"
-    else:
-        days, seconds = divmod(time_left.total_seconds(), 86400)
-        hours, seconds = divmod(seconds, 3600)
-        minutes, seconds = divmod(seconds, 60)
-        return f"{int(days)}d {int(hours)}h {int(minutes)}m {int(seconds)}s"
+    def time_left(self):
+        time_left = self.end_date - timezone.now()
+        if time_left.days < 0:
+            return "Leilão encerrado"
+        else:
+            days = time_left.days
+            hours, remainder = divmod(time_left.seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            return f"{days}d {hours}h {minutes}m {seconds}s"
 
         
 class bids(models.Model):

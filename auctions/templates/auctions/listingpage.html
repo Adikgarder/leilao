@@ -26,27 +26,33 @@
           </button>
         </form>
       </div>
-
-       <!-- Tabela com nomes e lances dos usuários -->
-      <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Usuário</th>
-                <th scope="col">Lance</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for bid in user_bids %}
-            <tr>
-                <td>{{ bid.user }}</td>
-                <td>{{ bid.bid_amount }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+          
+    
     </div>
   </div>
 </div>
+<div class="card" style="max-height: 150px; overflow: auto;">
+  <h5 class="card-title text-center">Lances dos Participantes</h5>
+  <div class="card-body d-flex">
+    <table class="table" style="border-spacing:; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="padding: 8px;">Usuário</th>
+          <th style="padding: 8px;">Lance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for bid in allbids %}
+        <tr>
+          <td style="padding: 5px;">{{ bid.user }}</td>
+          <td style="padding: 5px;">{{ bid.bid }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
 <div class="card" style="max-height: 400px; overflow: auto;">
   <div class="card-body">
@@ -157,5 +163,6 @@
     bottom: 0;
     width: 100%;
   }
+  
 </style>
 {% endblock %}

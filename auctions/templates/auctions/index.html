@@ -34,13 +34,14 @@
 
   <div class="time-left">
     {% timezone "Africa/Maputo" %}
-      {% if list.end_date|date:'U' < timezone.now|date:'U' %}
+      {% if list.end_date < timezone.now %}
         <p class="text-danger">Leilão encerrado</p>
       {% else %}
-        <p>Tempo restante: {{ list.end_date|timeuntil }}</p>
+        <p>Tempo restante:  {{ list.end_date|timeuntil }}</p>
       {% endif %}
     {% endtimezone %}
   </div>
+  
   
 
   <a href="{% url 'listingpage' list.id %}" class="btn btn-primary btn-sm">Dar Lance</a>
